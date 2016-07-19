@@ -11,6 +11,7 @@ import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
 import java.util.ArrayList;
 
 /**
+ * Ищет инициализацию объектов
  *
  * @author Ilya-pc
  */

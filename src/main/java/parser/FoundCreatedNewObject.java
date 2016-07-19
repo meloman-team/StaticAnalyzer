@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Ищет создание класса
  * не работает если создание происходит в параметах метода
  * @author Ilya
  */

@@ -1,8 +1,4 @@
-package parser;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package parser;
 
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.Parameter;
@@ -13,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * работает только если в классе один конструктор
- * @author Ilya-pc
+ * Находит конструктор класса
+ * работает только если в классе один конструктор TODO сделать поиск всех конструкторов
  */
 public class SearchConstructor extends VoidVisitorAdapter {
 
