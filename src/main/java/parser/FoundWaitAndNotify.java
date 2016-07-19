@@ -10,8 +10,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.util.ArrayList;
 
 /**
- *
- * @author Ilya-pc
+ * Поиск вызова методов wait, notify, notifyAll и объектов у которых они вызваны
  */
 public class FoundWaitAndNotify extends VoidVisitorAdapter {
     

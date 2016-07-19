@@ -10,6 +10,7 @@ import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import parser.*;
+import utils.ParserMetods;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,37 +41,27 @@ public class ModuleWateAndNotify {
      * @throws Exception
      */
     public void main() throws Exception {
-
-        //String path = "D:\\Program\\Projects\\NetBeansProjects\\mavenParserTest\\src\\main\\java\\com\\mycompany\\mavenparsertest\\Reader.java";
-        //String path = "D:\\Program\\Projects\\NetBeansProjects\\mavenParserTest\\src\\main\\java\\com\\mycompany\\mavenparsertest\\syn.java";
         for (String file : files) {
 
             CompilationUnit cu = parse(file);
 
             //ищем все методы
-            ArrayList<MethodDeclaration> methodDeclaration = findAllMethods(cu);
+            ArrayList<MethodDeclaration> methodDeclaration = ParserMetods.findAllMethods(cu);
 
-            FoundWaitAndNotify foundWaitAndNotify;
             for (MethodDeclaration methodDeclaration1 : methodDeclaration) {
-                foundWaitAndNotify = new FoundWaitAndNotify();
-
                 //внутри каждого метода ищем вызов wait()
                 BlockStmt body = methodDeclaration1.getBody();
-                foundWaitAndNotify.visit(body, null);
+                FoundWaitAndNotify foundWaitAndNotify = ParserMetods.getFoundWaitAndNotify(body);
                 ArrayList<Expression> objectOnWait = foundWaitAndNotify.getObjectOnWait();
 
                 if (!objectOnWait.isEmpty()) {
 
                     for (Expression objectOnWait1 : objectOnWait) {
                         //для кждог объекта у которого вызван wait() ищем инициализацию в конструкторе
-                        //работает только если у класса не более одного конструктора
-                        SearchConstructor searchConstructor = new SearchConstructor();
-                        searchConstructor.visit(cu, null);
+                        //TODO работает только если у класса не более одного конструктора
+                        SearchConstructor searchConstructor = ParserMetods.getSearchConstructor(cu);
 
-                        BlockStmt blockConstructor = searchConstructor.getBlock();
-                        FoundAssign fa = new FoundAssign();
-                        fa.visit(blockConstructor, objectOnWait1);
-                        ArrayList<Expression> objectAssign = fa.getObjectAssign();
+                        ArrayList<Expression> objectAssign = ParserMetods.getFoundAssign(searchConstructor.getBlock(), objectOnWait1).getObjectAssign();
 
                         //если есть инициализация смотрим наличие в конструкторах класса
                         if (!objectAssign.isEmpty()) {
@@ -91,10 +82,9 @@ public class ModuleWateAndNotify {
                             }
                         }
 
-                        FoundInit foundInit = new FoundInit();
                         //для кждог объекта у которого вызван wait() ищем инициализацию в методе
-                        foundInit.visit(body, objectOnWait1);//TODO НЕ НАХОДИТ ПРИСТВОЕНИЕ В КОНСТРУКТОРЕ
-                        ArrayList<Expression> objectInit = foundInit.getObjectInit();
+                        //TODO НЕ НАХОДИТ ПРИСТВОЕНИЕ В КОНСТРУКТОРЕ
+                        ArrayList<Expression> objectInit = ParserMetods.getFoundInit(body, objectOnWait1).getObjectInit();
 
                         List<Parameter> parameters = methodDeclaration1.getParameters();
                         for (int i = 0; i < parameters.size(); i++) {
@@ -441,14 +431,14 @@ public class ModuleWateAndNotify {
         return true;
     }
 
-    /*
-    * Возвращает все найденные методы в переданном участке кода
-     */
-    private ArrayList<MethodDeclaration> findAllMethods(CompilationUnit cu) {
-        FoundMethod foundMethod = new FoundMethod();
-        foundMethod.visit(cu, null);
-        return foundMethod.getMethodDeclaration();
-    }
+//    /*
+//    * Возвращает все найденные методы в переданном участке кода
+//     */
+//    private ArrayList<MethodDeclaration> findAllMethods(CompilationUnit cu) {
+//        FoundMethod foundMethod = new FoundMethod();
+//        foundMethod.visit(cu, null);
+//        return foundMethod.getMethodDeclaration();
+//    }
 
     /*
     * Возвращает все найденные методы c заданным значением параметра
