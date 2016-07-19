@@ -46,9 +46,7 @@ public class ModuleWateAndNotify {
             CompilationUnit cu = parse(file);
 
             //ищем все методы
-            ArrayList<MethodDeclaration> methodDeclaration = ParserMetods.findAllMethods(cu);
-
-            for (MethodDeclaration methodDeclaration1 : methodDeclaration) {
+            for (MethodDeclaration methodDeclaration1 : ParserMetods.findAllMethods(cu)) {
                 //внутри каждого метода ищем вызов wait()
                 BlockStmt body = methodDeclaration1.getBody();
                 FoundWaitAndNotify foundWaitAndNotify = ParserMetods.getFoundWaitAndNotify(body);
@@ -247,13 +245,10 @@ public class ModuleWateAndNotify {
                             }
                             //в классе ищем конструктор
                             //получаем имя объекта в параметрах конструктор на котором должен быть вызван Notify
-                            SearchConstructor searchConstructor = new SearchConstructor();
-                            searchConstructor.visit(cu2, null);
+                            SearchConstructor searchConstructor = ParserMetods.getSearchConstructor(cu2);
                             ArrayList<VariableDeclaratorId> constructorParameters = searchConstructor.getConstructorParameters();
                             VariableDeclaratorId get = constructorParameters.get(idx.get(k));
-                            FoundAssign foundAssign = new FoundAssign();
-                            foundAssign.visit(searchConstructor.getBlock(), get);
-                            ArrayList<Expression> objectAssign = foundAssign.getObjectAssign();
+                            ArrayList<Expression> objectAssign = ParserMetods.getFoundAssign(searchConstructor.getBlock(), get).getObjectAssign();
                             //внутри каждого класса ищем вызов Notify()
                             //ищем передачу в другие конструкторы данного объекта
                             //получаем имя объекта в конструкторе на котором должен быть вызван Notify
@@ -312,20 +307,15 @@ public class ModuleWateAndNotify {
                     Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                //ищем создание класса в котором есть метод с вызовом wait
-                //не проверяется вызов статических методов!!!!!!!!
-                FoundCreatedObject foundCreatedObject = new FoundCreatedObject();
-                foundCreatedObject.visit(cu, splitPathToNameClass(pathClass));
-
                 //ищем вызов известного метода который содержит вызов wait()
-                FoundMethodCall foundMethodCall = new FoundMethodCall();
-                foundMethodCall.visit(cu, nameMethod);
-
+                FoundMethodCall foundMethodCall = ParserMetods.getFoundMethodCall(cu, nameMethod);
                 //получаем список аргументов методов
                 ArrayList<List<Expression>> foundMethodCallArgs = foundMethodCall.getFoundMethodCallArgs();
-
                 ArrayList<String> nameScopeObject = foundMethodCall.getNameScopeObject();
-                ArrayList<String> foundCreatedObjet = foundCreatedObject.getFoundCreatedObjet();
+
+                //ищем создание класса в котором есть метод с вызовом wait
+                //не проверяется вызов статических методов!!!!!!!!
+                ArrayList<String> foundCreatedObjet = ParserMetods.getFoundCreatedObject(cu, splitPathToNameClass(pathClass)).getFoundCreatedObjet();
 
                 //нет создания значит нет вызова вейт значит все хорошо
                 if (foundCreatedObjet.isEmpty()) {
@@ -377,10 +367,8 @@ public class ModuleWateAndNotify {
                 for (int k = 0; k < foundObject.size(); k++) {
                     String nameObject = foundObject.get(k);
 
-                    FoundInit foundInit = new FoundInit();
-                    foundInit.visit((VariableDeclarator) cu, nameObject);
                     //нашли тип или имя класса 
-                    ArrayList<String> foundTypeObject = foundInit.getFoundTypeObject();
+                    ArrayList<String> foundTypeObject = ParserMetods.getFoundInit((BlockStmt)cu, nameObject).getFoundTypeObject();
                     if (foundTypeObject.size() > 1) {
                         System.out.println("что то не так не должно быть больше 1 типа");
                     }
@@ -399,11 +387,8 @@ public class ModuleWateAndNotify {
                                 Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             //в классе ищем метод
-                            //найти метод из foundMethod 
-                            FoundMethod fm = new FoundMethod();
-                            fm.visit(cu2, foundMethod.get(k));
-                            ArrayList<MethodDeclaration> methodDeclaration = fm.getMethodDeclaration();
-                            for (MethodDeclaration md : methodDeclaration) {
+                            //найти метод из foundMethod
+                            for (MethodDeclaration md : ParserMetods.getFoundMethod(cu2, foundMethod.get(k)).getMethodDeclaration()) {
 
                                 //внутри каждого метода ищем вызов Notify()
                                 //ищем передачу в другие методы данного объекта
@@ -485,8 +470,7 @@ public class ModuleWateAndNotify {
 
     private <T> boolean foundNotify(T cu, String nameObject) {
         //найти вызов notifay в данном коде у данной переменной
-        FoundWaitAndNotify foundWaitAndNotify = new FoundWaitAndNotify();
-        foundWaitAndNotify.visit((CompilationUnit) cu, null);
+        FoundWaitAndNotify foundWaitAndNotify = ParserMetods.getFoundWaitAndNotify((CompilationUnit) cu);//TODO решить вопрос
         ArrayList<Expression> objectOnNotify = foundWaitAndNotify.getObjectOnNotify();
         ArrayList<Expression> objectOnNotifyAll = foundWaitAndNotify.getObjectOnNotifyAll();
         for (Expression e : objectOnNotify) {
@@ -521,10 +505,7 @@ public class ModuleWateAndNotify {
                         .getName()).log(Level.SEVERE, null, ex);
             }
 
-            FoundImport foundImport = new FoundImport();
-            foundImport.visit(cu, null);
-            ArrayList<String> importNames = foundImport.getImportNames();
-            for (String importName : importNames) {
+            for (String importName : ParserMetods.getFoundImport(cu).getImportNames()) {
                 if (importName.equals(nameClass)) {
                     filesTryImport.add(file);
                 }

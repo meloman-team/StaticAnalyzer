@@ -103,4 +103,28 @@ public class ParserMetods {
         byParameterValue.visit(cu, nameObj);
         return byParameterValue;
     }
+
+    public static FoundCreatedObject getFoundCreatedObject(CompilationUnit cu, String nameObj){
+        FoundCreatedObject foundCreatedObject = new FoundCreatedObject();
+        foundCreatedObject.visit(cu, nameObj);
+        return foundCreatedObject;
+    }
+
+    public static FoundMethodCall getFoundMethodCall(CompilationUnit cu, String nameMethod){
+        FoundMethodCall foundMethodCall = new FoundMethodCall();
+        foundMethodCall.visit(cu, nameMethod);
+        return foundMethodCall;
+    }
+
+    public static FoundMethod getFoundMethod(CompilationUnit cu, String nameMethod){
+        FoundMethod fm = new FoundMethod();
+        fm.visit(cu, nameMethod);
+        return fm;
+    }
+
+    public static FoundImport getFoundImport(CompilationUnit cu){
+        FoundImport foundImport = new FoundImport();
+        foundImport.visit(cu, null);
+        return foundImport;
+    }
 }
