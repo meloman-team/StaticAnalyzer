@@ -5,7 +5,6 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.BlockStmt;
@@ -505,7 +504,7 @@ public class ModuleWateAndNotify {
                         .getName()).log(Level.SEVERE, null, ex);
             }
 
-            for (String importName : ParserMetods.getFoundImport(cu).getImportNames()) {
+            for (String importName : ParserMetods.getFoundImport(cu)) {
                 if (importName.equals(nameClass)) {
                     filesTryImport.add(file);
                 }

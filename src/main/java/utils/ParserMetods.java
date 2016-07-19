@@ -1,12 +1,13 @@
 package utils;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import parser.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SBT-Gorlovskiy-IA on 19.07.2016.
@@ -52,8 +53,6 @@ public class ParserMetods {
     }
 
     /**
-     *
-     *
      * @param blockStmt
      * @param arg
      * @param <A>
@@ -69,10 +68,10 @@ public class ParserMetods {
      * возвращает заполненый FoundInit
      *
      * @param body блок кода (тело метода) где производиться поиск инициализации
-     * @param obj объект для которого необходимо найти инициализацию
+     * @param obj  объект для которого необходимо найти инициализацию
      * @return FoundInit
      */
-    public static FoundInit getFoundInit(BlockStmt body, Object obj){
+    public static FoundInit getFoundInit(BlockStmt body, Object obj) {
         FoundInit foundInit = new FoundInit();
         foundInit.visit(body, obj);//TODO НЕ НАХОДИТ ПРИСТВОЕНИЕ В КОНСТРУКТОРЕ
         return foundInit;
@@ -81,50 +80,51 @@ public class ParserMetods {
     /**
      * возвращает заполненый FoundCreatedNewObject
      *
-     * @param cu класс или метод в котором производиться поиск
+     * @param cu        класс или метод в котором производиться поиск
      * @param nameClass название искомого класса
      * @return FoundCreatedNewObject
      */
-    public static FoundCreatedNewObject getFoundCreatedNewObject(CompilationUnit cu, String nameClass){
+    public static FoundCreatedNewObject getFoundCreatedNewObject(CompilationUnit cu, String nameClass) {
         FoundCreatedNewObject foundCreatedNewObject = new FoundCreatedNewObject();
         foundCreatedNewObject.visit(cu, nameClass);
         return foundCreatedNewObject;
     }
 
     /**
-     *
-     *
      * @param cu
      * @param nameObj
      * @return
      */
-    public static FoundCreatedNewObjByParameterValue getFoundCreatedNewObjByParameterValue(CompilationUnit cu, String nameObj){
+    public static FoundCreatedNewObjByParameterValue getFoundCreatedNewObjByParameterValue(CompilationUnit cu, String nameObj) {
         FoundCreatedNewObjByParameterValue byParameterValue = new FoundCreatedNewObjByParameterValue();
         byParameterValue.visit(cu, nameObj);
         return byParameterValue;
     }
 
-    public static FoundCreatedObject getFoundCreatedObject(CompilationUnit cu, String nameObj){
+    public static FoundCreatedObject getFoundCreatedObject(CompilationUnit cu, String nameObj) {
         FoundCreatedObject foundCreatedObject = new FoundCreatedObject();
         foundCreatedObject.visit(cu, nameObj);
         return foundCreatedObject;
     }
 
-    public static FoundMethodCall getFoundMethodCall(CompilationUnit cu, String nameMethod){
+    public static FoundMethodCall getFoundMethodCall(CompilationUnit cu, String nameMethod) {
         FoundMethodCall foundMethodCall = new FoundMethodCall();
         foundMethodCall.visit(cu, nameMethod);
         return foundMethodCall;
     }
 
-    public static FoundMethod getFoundMethod(CompilationUnit cu, String nameMethod){
+    public static FoundMethod getFoundMethod(CompilationUnit cu, String nameMethod) {
         FoundMethod fm = new FoundMethod();
         fm.visit(cu, nameMethod);
         return fm;
     }
 
-    public static FoundImport getFoundImport(CompilationUnit cu){
-        FoundImport foundImport = new FoundImport();
-        foundImport.visit(cu, null);
-        return foundImport;
+    public static List<String> getFoundImport(CompilationUnit cu) {
+        List<ImportDeclaration> imports = cu.getImports();
+        ArrayList<String> ImportNames = new ArrayList<>();
+        for (ImportDeclaration importDeclaration : imports) {
+            ImportNames.add(importDeclaration.getName().getName());
+        }
+        return ImportNames;
     }
 }
