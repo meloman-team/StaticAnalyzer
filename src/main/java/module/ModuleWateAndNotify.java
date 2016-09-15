@@ -79,7 +79,7 @@ public class ModuleWateAndNotify {
                             }
                         }
 
-                        //для кждог объекта у которого вызван wait() ищем инициализацию в методе
+                        //для каждог объекта у которого вызван wait() ищем инициализацию в методе
                         //TODO НЕ НАХОДИТ ПРИСТВОЕНИЕ В КОНСТРУКТОРЕ
                         ArrayList<Expression> objectInit = ParserMetods.getFoundInit(body, objectOnWait1).getObjectInit();
 
