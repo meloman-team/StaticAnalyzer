@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import module.ModuleWateAndNotify;
+import module.ModuleWaitAndNotify;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ModuleWateAndNotify n = new ModuleWateAndNotify();
+        ModuleWaitAndNotify n = new ModuleWaitAndNotify();
         try {
             n.main();
         } catch (Exception ex) {

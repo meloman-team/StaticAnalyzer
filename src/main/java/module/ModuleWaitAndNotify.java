@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ModuleWateAndNotify {
+public class ModuleWaitAndNotify {
 
     //список проверяемых файлов 
     ArrayList<String> files = new ArrayList();
 
-    public ModuleWateAndNotify() {
+    public ModuleWaitAndNotify() {
         //TODO изменить на заполнение из параметров
         files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Reader.java");
         files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Writer.java");
@@ -32,7 +32,7 @@ public class ModuleWateAndNotify {
         files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\ReaderWriter.java");
     }
 
-    public ModuleWateAndNotify(ArrayList<String> files) {
+    public ModuleWaitAndNotify(ArrayList<String> files) {
         this.files = files;
     }
 
@@ -134,9 +134,9 @@ public class ModuleWateAndNotify {
                 cu = parse(allClas);
                 cu2 = parse(pathClass);
             } catch (ParseException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (cu.getPackage().toString().equals(cu2.getPackage().toString())) {
                 //добавляем все классы из того же пакета
@@ -152,9 +152,9 @@ public class ModuleWateAndNotify {
                 try {
                     cu = parse(foundClassImport1);
                 } catch (ParseException ex) {
-                    Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //ищем создание класса в котором есть метод с вызовом wait
@@ -238,9 +238,9 @@ public class ModuleWateAndNotify {
                             try {
                                 cu2 = parse(path);
                             } catch (ParseException ex) {
-                                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (IOException ex) {
-                                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             //в классе ищем конструктор
                             //получаем имя объекта в параметрах конструктор на котором должен быть вызван Notify
@@ -284,9 +284,9 @@ public class ModuleWateAndNotify {
                 cu = parse(allClas);
                 cu2 = parse(pathClass);
             } catch (ParseException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (cu.getPackage().toString().equals(cu2.getPackage().toString())) {
                 //добавляем все классы из того же пакета
@@ -301,9 +301,9 @@ public class ModuleWateAndNotify {
                 try {
                     cu = parse(foundClassImport1);
                 } catch (ParseException ex) {
-                    Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //ищем вызов известного метода который содержит вызов wait()
@@ -381,9 +381,9 @@ public class ModuleWateAndNotify {
                             try {
                                 cu2 = parse(path);
                             } catch (ParseException ex) {
-                                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (IOException ex) {
-                                Logger.getLogger(ModuleWateAndNotify.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ModuleWaitAndNotify.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             //в классе ищем метод
                             //найти метод из foundMethod
@@ -469,7 +469,7 @@ public class ModuleWateAndNotify {
 
     private <T> boolean foundNotify(T cu, String nameObject) {
         //найти вызов notifay в данном коде у данной переменной
-        FoundWaitAndNotify foundWaitAndNotify = ParserMetods.getFoundWaitAndNotify((CompilationUnit) cu);//TODO решить вопрос
+        FoundWaitAndNotify foundWaitAndNotify = ParserMetods.getFoundWaitAndNotify((CompilationUnit) cu);
         ArrayList<Expression> objectOnNotify = foundWaitAndNotify.getObjectOnNotify();
         ArrayList<Expression> objectOnNotifyAll = foundWaitAndNotify.getObjectOnNotifyAll();
         for (Expression e : objectOnNotify) {
@@ -496,11 +496,11 @@ public class ModuleWateAndNotify {
                 cu = parse(file);
 
             } catch (ParseException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class
+                Logger.getLogger(ModuleWaitAndNotify.class
                         .getName()).log(Level.SEVERE, null, ex);
 
             } catch (IOException ex) {
-                Logger.getLogger(ModuleWateAndNotify.class
+                Logger.getLogger(ModuleWaitAndNotify.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
 

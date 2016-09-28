@@ -39,6 +39,18 @@ public class ParserMetods {
         return foundWaitAndNotify;
     }
 
+    /**
+     * Возвращает заполненный FoundWaitAndNotify
+     *
+     * @param body блок кода (тело метода)
+     * @return FoundWaitAndNotify
+     */
+    public static FoundWaitAndNotify getFoundWaitAndNotify(CompilationUnit body) {
+        FoundWaitAndNotify foundWaitAndNotify = new FoundWaitAndNotify();
+        foundWaitAndNotify.visit(body, null);
+        return foundWaitAndNotify;
+    }
+
 
     /**
      * Возвращает заполненный SearchConstructor
