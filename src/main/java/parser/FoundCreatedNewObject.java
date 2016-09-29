@@ -19,13 +19,13 @@ import java.util.List;
 public class FoundCreatedNewObject extends VoidVisitorAdapter {
 
     private ArrayList<String> typeObject;
-    private ArrayList<String> nameScopeObject;
-    private ArrayList<List<Expression>> foundCreatedNewObjectArgs;//параметры
+    private ArrayList<String> nameScopeObject;//название переменной в которой храниться создаваемый объект
+    private ArrayList<List<Expression>> foundConstructorArgs;//параметры
 
     public FoundCreatedNewObject() {
         typeObject = new ArrayList<>();
         nameScopeObject = new ArrayList<>();
-        foundCreatedNewObjectArgs = new ArrayList<>();
+        foundConstructorArgs = new ArrayList<>();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class FoundCreatedNewObject extends VoidVisitorAdapter {
                 }
             }
             nameScopeObject.add(toString);
-            foundCreatedNewObjectArgs.add(objectCreationExpr.getArgs());
+            foundConstructorArgs.add(objectCreationExpr.getArgs());
             typeObject.add(objectCreationExpr.getType().toString());
         }
     }
@@ -50,8 +50,8 @@ public class FoundCreatedNewObject extends VoidVisitorAdapter {
         return nameScopeObject;
     }
 
-    public ArrayList<List<Expression>> getFoundCreatedNewObjectArgs() {
-        return foundCreatedNewObjectArgs;
+    public ArrayList<List<Expression>> getFoundConstructorArgs() {
+        return foundConstructorArgs;
     }
 
 }

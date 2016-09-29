@@ -160,7 +160,7 @@ public class ModuleWaitAndNotify {
                 //ищем создание класса в котором есть метод с вызовом wait
                 ArrayList<List<Expression>> foundCreatedNewObjectArgs = ParserMetods
                         .getFoundCreatedNewObject(cu, splitPathToNameClass(pathClass))
-                        .getFoundCreatedNewObjectArgs();
+                        .getFoundConstructorArgs();
 
                 //если нет создания обыекта с вызовом вейт то нет и остановки потока
                 if (foundCreatedNewObjectArgs.isEmpty()) {

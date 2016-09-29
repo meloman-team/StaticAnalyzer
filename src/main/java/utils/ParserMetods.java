@@ -90,6 +90,19 @@ public class ParserMetods {
     }
 
     /**
+     * возвращает заполненый FoundInit
+     *
+     * @param body блок кода (тело файла) где производиться поиск инициализации
+     * @param obj  объект для которого необходимо найти инициализацию
+     * @return FoundInit
+     */
+    public static FoundInit getFoundInit(CompilationUnit body, Object obj) {
+        FoundInit foundInit = new FoundInit();
+        foundInit.visit(body, obj);//TODO НЕ НАХОДИТ ПРИСТВОЕНИЕ В КОНСТРУКТОРЕ
+        return foundInit;
+    }
+
+    /**
      * возвращает заполненый FoundCreatedNewObject
      *
      * @param cu        класс или метод в котором производиться поиск
