@@ -47,5 +47,4 @@ public class SearchConstructor extends VoidVisitorAdapter {
         return block;
     }
     
-    
 }

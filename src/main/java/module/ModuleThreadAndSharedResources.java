@@ -21,14 +21,6 @@ public class ModuleThreadAndSharedResources {
     //список проверяемых файлов
     ArrayList<String> files = new ArrayList();
 
-    public ModuleThreadAndSharedResources() {
-        //TODO изменить на заполнение из параметров
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Reader.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Writer.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\syn.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\ReaderWriter.java");
-    }
-
     public ModuleThreadAndSharedResources(ArrayList<String> files) {
         this.files = files;
     }
@@ -40,8 +32,11 @@ public class ModuleThreadAndSharedResources {
 
             //разделить файл на блоки видимости в которых производить поиск создания потоков и передачи в них параметров
             //Поиск создания потока и параметров потока
+            //TODO класс Thread может быть не java.lang.Thread а пользовательским классом данная ошибка не обрабатывается
             ArrayList<List<Expression>> threadArgs = ParserMetods.getFoundCreatedNewObject(cu, "Thread").getFoundConstructorArgs();//находит - "new  Thread(writer)"
+            if(threadArgs == null) continue;
             List<List<String>> classArgs = getClassArgs(cu, threadArgs);
+            if(classArgs == null) continue;//TODO проверять не только конструкторы но и сеттеры
             for (int i = 0; i < classArgs.size(); i++) {
                 for (int j = 0; j < classArgs.size(); j++) {
                     if (i == j) continue;
@@ -67,7 +62,7 @@ public class ModuleThreadAndSharedResources {
      * @return
      */
     private static List<List<String>> getClassArgs(CompilationUnit cu, List<List<Expression>> threadArgs) {
-        List<List<String>> result = null;
+        List<List<String>> result = new ArrayList<>();
         for (List<Expression> threadArg : threadArgs) {
             if (threadArg.size() > 1) {
                 System.out.println("Что то пошло не так. Thread не может иметь больше 1 параметра");

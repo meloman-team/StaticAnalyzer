@@ -19,18 +19,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class ModuleWaitAndNotify {
+//TODO Для нормальной работы необходимо подключить поиск разделяемых переменных
+//TODO если поток блокируется без таймера то разбудить его может только другой поток с таким же объектом синхронизации
 
     //список проверяемых файлов 
     ArrayList<String> files = new ArrayList();
-
-    public ModuleWaitAndNotify() {
-        //TODO изменить на заполнение из параметров
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Reader.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\Writer.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\syn.java");
-        files.add("C:\\Users\\sbt-gorlovskiy-ia\\Desktop\\Д\\netBeans\\test\\ReaderWriter.java");
-    }
 
     public ModuleWaitAndNotify(ArrayList<String> files) {
         this.files = files;
