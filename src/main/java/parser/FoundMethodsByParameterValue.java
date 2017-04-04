@@ -5,10 +5,6 @@ import com.github.javaparser.ast.expr.Expression;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Ilya
- */
 public class FoundMethodsByParameterValue {
 
     private final ArrayList<String> foundObject;//найденые объекты

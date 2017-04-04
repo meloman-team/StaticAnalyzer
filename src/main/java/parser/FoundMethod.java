@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * класс ищет объявленные методы в классе если в параметры передан null возвращает все найденные методы
  * при передачи названия метода возвращает методы с таким же именем
- * @author Ilya-pc
  */
 public class FoundMethod extends VoidVisitorAdapter {
 

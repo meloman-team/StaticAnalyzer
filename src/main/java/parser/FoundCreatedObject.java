@@ -7,9 +7,6 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Ilya-pc
- */
 public class FoundCreatedObject extends VoidVisitorAdapter {
 
     private ArrayList<String> foundCreatedObjet;//переменные в которых храняться созданный объект

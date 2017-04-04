@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Ilya
+ * Поиск создания нового объекта по входным параметрам
  */
 public class FoundCreatedNewObjByParameterValue extends VoidVisitorAdapter {
 

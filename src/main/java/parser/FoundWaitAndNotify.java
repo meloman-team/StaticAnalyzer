@@ -22,7 +22,8 @@ public class FoundWaitAndNotify extends VoidVisitorAdapter {
      
     @Override
         public void visit(MethodCallExpr n, Object arg) {
-            if(n.getName().equals("wait")) objectOnWait.add(n.getScope());
+        //если поток блокируется без таймера то разбудить его может только другой поток с таким же объектом синхронизации
+            if(n.getName().equals("wait") && n.getTypeArgs().size() == 0) objectOnWait.add(n.getScope());
             if(n.getName().equals("notify")) objectOnNotify.add(n.getScope());
             if(n.getName().equals("notifyAll")) objectOnNotifyAll.add(n.getScope());
 //            System.out.println(n.getName());

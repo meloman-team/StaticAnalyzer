@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * класс находит методы которым в параметры передается искомый объект
- * @author Ilya
  */
 public class FoundMethodsCallByParameterValue {
 

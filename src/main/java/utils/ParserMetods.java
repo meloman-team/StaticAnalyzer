@@ -1,18 +1,47 @@
 package utils;
 
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import parser.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by SBT-Gorlovskiy-IA on 19.07.2016.
- */
 public class ParserMetods {
+
+    public static String splitPathToNameClass(String path) {
+        String[] split = path.split(".+\\\\");
+        for (String string : split) {
+            if (!string.equals("")) {
+                path = string;
+            }
+        }
+        String[] sp = path.split("\\.java");
+        for (String string : sp) {
+            if (!string.equals("")) {
+                path = string;
+            }
+        }
+        return path;
+    }
+
+    public static CompilationUnit parse(String path) throws ParseException, IOException {
+        FileInputStream in = new FileInputStream(path);
+
+        CompilationUnit cu;
+        try {
+            cu = JavaParser.parse(in);
+        } finally {
+            in.close();
+        }
+        return cu;
+    }
 
     /**
      * Возвращает все найденные методы в переданном участке кода
@@ -65,6 +94,8 @@ public class ParserMetods {
     }
 
     /**
+     * Присвоение?
+     *
      * @param blockStmt
      * @param arg
      * @param <A>

@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Ищет создание класса
  * не работает если создание происходит в параметах метода
- * @author Ilya
  */
 public class FoundCreatedNewObject extends VoidVisitorAdapter {
 

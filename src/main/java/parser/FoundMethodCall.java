@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Ilya-pc
+ * поиск вызова методов
  */
 public class FoundMethodCall extends VoidVisitorAdapter {
 
@@ -32,7 +31,6 @@ public class FoundMethodCall extends VoidVisitorAdapter {
     @Override
     public void visit(MethodCallExpr n, Object arg) {
         if (arg == null || n.getName().equals(arg.toString())) {
-
             nameMethodCall.add(n.getName());//название метода
             nameScopeObject.add(n.getScope().toString());//название объекта у какого объекта вызван метод
             List<Expression> args = n.getArgs();//аргументы метода

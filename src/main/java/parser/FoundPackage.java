@@ -3,10 +3,6 @@ package parser;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-/**
- *
- * @author melom
- */
 public class FoundPackage extends VoidVisitorAdapter {
 
     private String packageName;

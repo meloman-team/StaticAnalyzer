@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 /**
  * Ищет инициализацию объектов
- *
- * @author Ilya-pc
  */
 public class FoundInit extends ModifierVisitorAdapter {
 
