@@ -38,10 +38,18 @@ public class ModuleThreadAndSharedResources {
             List<ThreadObject> classArgs = getClassArgs(cu, threadArgs);
             if (classArgs == null) continue;//TODO проверять не только конструкторы но и сеттеры
             for (int i = 0; i < classArgs.size(); i++) {
-                for (int j = i; j < classArgs.size(); j++) {// j = i для исключения дублей
-                    ThreadObject thread1 = classArgs.get(i);
+                ThreadObject thread1 = classArgs.get(i);
+                ResultSharedResources.SharedThread sharedThread = result.getSharedThread(thread1.getVariableType());
+                if (sharedThread == null) {
+                    sharedThread = new ResultSharedResources.SharedThread(thread1.getVariableType());
+                    result.getSharedThread().add(sharedThread);
+                }
+                ResultSharedResources.RunSharedThread runSharedThread = new ResultSharedResources.RunSharedThread();
+                runSharedThread.setNumberThread(sharedThread.getRunSharedThreads().size() + 1);
+                sharedThread.getRunSharedThreads().add(runSharedThread);
+                for (int j = 0; j < classArgs.size(); j++) {
                     ThreadObject thread2 = classArgs.get(j);
-                    if (thread1.equals(thread2)) continue;
+                    if (i == j) continue;
                     List<String> thread1Parameters = thread1.getConstructorParameters();
                     List<String> thread2Parameters = thread2.getConstructorParameters();
                     for (int i2 = 0; i2 < thread1Parameters.size(); i2++) {
@@ -49,8 +57,9 @@ public class ModuleThreadAndSharedResources {
                             String s1 = thread1Parameters.get(i2);
                             String s2 = thread2Parameters.get(j2);
                             if (s1.equals(s2)) {
-                                result.addResult(thread1.getVariableType(), s1, i2, thread2.getVariableType());
-                                result.addResult(thread2.getVariableType(), s2, j2, thread1.getVariableType());
+                                runSharedThread.getSharedResources().add(
+                                        new ResultSharedResources.SharedResources(s1, i2, thread2.getVariableType())
+                                );
                             }
                         }
                     }
@@ -98,4 +107,5 @@ public class ModuleThreadAndSharedResources {
         }
         return result;
     }
+
 }

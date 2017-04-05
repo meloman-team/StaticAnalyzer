@@ -26,28 +26,9 @@ public class ResultSharedResources {
     }
 
     /**
-     * @param nameClassThread      Тип потока
-     * @param nameSharedResources  Имя разделяемой переменной(не в конструкторе)
-     * @param indexSharedResources Индекс разделяемой переменной в конструкторе класса (nameClassThread)
-     * @param typeThread           Тип потока c которым разделяеться переменная
+     * разделяемый поток
      */
-    public void addResult(String nameClassThread, String nameSharedResources, int indexSharedResources, String typeThread) {
-        SharedThread sharedThread = this.getSharedThread(nameClassThread);
-        if (sharedThread == null) {
-            List<SharedResources> sharedResources = new ArrayList<>();
-            sharedResources.add(new SharedResources(nameSharedResources, indexSharedResources, typeThread));
-            sharedThread = new SharedThread(nameClassThread);
-            sharedThread.getSharedResources().addAll(sharedResources);
-            sharedThread.setCountRunThread(1);
-            result.add(sharedThread);
-        } else {
-            List<ResultSharedResources.SharedResources> sharedResources = sharedThread.getSharedResources();
-            sharedResources.add(new SharedResources(nameSharedResources, indexSharedResources, typeThread));
-            sharedThread.setCountRunThread(sharedThread.getCountRunThread() + 1);
-        }
-    }
-
-    public class SharedThread {
+    public static class SharedThread {
         /**
          * Тип потока
          */
@@ -55,11 +36,7 @@ public class ResultSharedResources {
         /**
          * Количество запускаемых потоков данного типа
          */
-        private int countRunThread = 0;
-        /**
-         * Разделяемые ресурсы
-         */
-        private List<SharedResources> sharedResources = new ArrayList<>();
+        private List<RunSharedThread> runSharedThreads = new ArrayList<>();
 
         public SharedThread (String typeThread){
             this.typeThread = typeThread;
@@ -73,13 +50,25 @@ public class ResultSharedResources {
             this.typeThread = typeThread;
         }
 
-        public int getCountRunThread() {
-            return countRunThread;
+        public List<RunSharedThread> getRunSharedThreads() {
+            return runSharedThreads;
         }
 
-        public void setCountRunThread(int countRunThread) {
-            this.countRunThread = countRunThread;
+        public void setRunSharedThreads(List<RunSharedThread> runSharedThreads) {
+            this.runSharedThreads = runSharedThreads;
         }
+    }
+
+    /**
+     * инстанс класса потока (запускаемый поток)
+     */
+    public static class RunSharedThread {
+        private int numberThread;
+
+        /**
+         * Разделяемые ресурсы
+         */
+        private List<SharedResources> sharedResources = new ArrayList<>();
 
         public List<SharedResources> getSharedResources() {
             return sharedResources;
@@ -88,9 +77,17 @@ public class ResultSharedResources {
         public void setSharedResources(List<SharedResources> sharedResources) {
             this.sharedResources = sharedResources;
         }
+
+        public int getNumberThread() {
+            return numberThread;
+        }
+
+        public void setNumberThread(int numberThread) {
+            this.numberThread = numberThread;
+        }
     }
 
-    public class SharedResources {
+    public static class SharedResources {
         /**
          * Имя разделяемой переменной(не в конструкторе)
          */
@@ -98,14 +95,14 @@ public class ResultSharedResources {
         /**
          * Индекс разделяемой переменной в конструкторе класса
          */
-        private int index;
+        private Integer index;
 
         /**
          * Тип потока c которым разделяеться переменная
          */
         private String typeThread;
 
-        SharedResources(String name, int index, String typeThread) {
+        public SharedResources(String name, Integer index, String typeThread) {
             this.name = name;
             this.index = index;
             this.typeThread = typeThread;

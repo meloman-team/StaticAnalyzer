@@ -1,4 +1,4 @@
-package testFiles;
+package testFiles.test_4;
 
 /**
  * Буфер (разделяемый ресурс)

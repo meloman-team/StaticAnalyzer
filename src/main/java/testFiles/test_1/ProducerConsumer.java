@@ -1,4 +1,4 @@
-package testFiles;
+package testFiles.test_1;
 
 /**
  * Тест производители-потребители

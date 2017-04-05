@@ -52,30 +52,33 @@ public class ModuleWaitAndNotify {
                         for (Expression exception : objectOnWait) {
                             result.put(exception, false);
                         }
-                        for (ResultSharedResources.SharedResources sharedResources : analyzSharedThread.getSharedResources()) {
-                            for (Expression exception : objectOnWait) {
-                                if (sharedResources.getName().equals(exception.toString())) {
-                                    String typeThread = sharedResources.getTypeThread();
-                                    for (String file2 : files) {
-                                        if (ParserMetods.splitPathToNameClass(file2).equals(typeThread)) {
-                                            CompilationUnit cu2 = ParserMetods.parse(file2);
-                                            for (MethodDeclaration methodDeclaration1 : ParserMetods.findAllMethods(cu2)) {
-                                                //внутри каждого метода ищем вызов Notify()
-                                                BlockStmt body2 = methodDeclaration1.getBody();
-                                                FoundWaitAndNotify foundWaitAndNotify2 = ParserMetods.getFoundWaitAndNotify(body2);
-                                                ArrayList<Expression> objectOnNotify = foundWaitAndNotify2.getObjectOnNotify();
-                                                ArrayList<Expression> objectOnNotifyAll = foundWaitAndNotify2.getObjectOnNotifyAll();
-                                                //TODO работает только если у класса не более одного конструктора
-                                                SearchConstructor searchConstructor = ParserMetods.getSearchConstructor(ParserMetods.parse(file2));
-                                                VariableDeclaratorId variableDeclaratorId = searchConstructor.getConstructorParameters().get(sharedResources.getIndex());
-                                                for (Expression expr : objectOnNotify) {
-                                                    if (expr.toString().equals(variableDeclaratorId.getName())) {
-                                                        result.put(exception, true);
+                        for (ResultSharedResources.RunSharedThread runSharedThread : analyzSharedThread.getRunSharedThreads()) {
+                            for (ResultSharedResources.SharedResources sharedResources : runSharedThread.getSharedResources()) {
+                                for (Expression exception : objectOnWait) {
+                                    if (sharedResources.getName().equals(exception.toString())) {
+                                        String typeThread = sharedResources.getTypeThread();
+                                        for (String file2 : files) {
+                                            if (ParserMetods.splitPathToNameClass(file2).equals(typeThread) &&
+                                                    !typeThread.equals(analyzFile)) {
+                                                CompilationUnit cu2 = ParserMetods.parse(file2);
+                                                for (MethodDeclaration methodDeclaration1 : ParserMetods.findAllMethods(cu2)) {
+                                                    //внутри каждого метода ищем вызов Notify()
+                                                    BlockStmt body2 = methodDeclaration1.getBody();
+                                                    FoundWaitAndNotify foundWaitAndNotify2 = ParserMetods.getFoundWaitAndNotify(body2);
+                                                    ArrayList<Expression> objectOnNotify = foundWaitAndNotify2.getObjectOnNotify();
+                                                    ArrayList<Expression> objectOnNotifyAll = foundWaitAndNotify2.getObjectOnNotifyAll();
+                                                    //TODO работает только если у класса не более одного конструктора
+                                                    SearchConstructor searchConstructor = ParserMetods.getSearchConstructor(ParserMetods.parse(file2));
+                                                    VariableDeclaratorId variableDeclaratorId = searchConstructor.getConstructorParameters().get(sharedResources.getIndex());
+                                                    for (Expression expr : objectOnNotify) {
+                                                        if (expr.toString().equals(variableDeclaratorId.getName())) {
+                                                            result.put(exception, true);
+                                                        }
                                                     }
-                                                }
-                                                for (Expression expr : objectOnNotifyAll) {
-                                                    if (expr.toString().equals(variableDeclaratorId.getName())) {
-                                                        result.put(exception, true);
+                                                    for (Expression expr : objectOnNotifyAll) {
+                                                        if (expr.toString().equals(variableDeclaratorId.getName())) {
+                                                            result.put(exception, true);
+                                                        }
                                                     }
                                                 }
                                             }

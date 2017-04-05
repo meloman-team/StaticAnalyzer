@@ -1,13 +1,13 @@
-package testFiles;
+package testFiles.test_2;
 
 /**
- * Производитель
+ * Потребитель
  */
-public class Producer implements Runnable {
+public class Consumer implements Runnable {
 
     private final Syn o;
 
-    public Producer(Syn o) {
+    public Consumer(Syn o) {
         this.o = o;
     }
 
@@ -17,11 +17,11 @@ public class Producer implements Runnable {
             synchronized (o) {
                 try {
                     int x = o.getX();
-                    if (x >= Syn.MAX_VALUE) {
-                        System.out.println("Producer wait");
+                    if (x <= Syn.MIN_VALUE) {
+                        System.out.println("Consumer wait");
                         o.wait();
                     } else {
-                        x++;
+                        x--;
                         o.setX(x);
                         System.out.println(x);
 //                        o.notifyAll();
