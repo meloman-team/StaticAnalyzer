@@ -6,6 +6,9 @@ import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import model.ResultSharedResources;
+import model.RunSharedThread;
+import model.SharedResources;
+import model.SharedThread;
 import parser.FoundWaitAndNotify;
 import parser.SearchConstructor;
 import utils.ParserMetods;
@@ -42,7 +45,7 @@ public class ModuleWaitAndNotify {
                 if (!objectOnWait.isEmpty()) {
                     String analyzFile = ParserMetods.splitPathToNameClass(file);
                     //TODO необходимо проверять полный путь до класса (не различает одинаковое название класса в разных пакетах)
-                    ResultSharedResources.SharedThread analyzSharedThread = resultSharedResources.getSharedThread(analyzFile);
+                    SharedThread analyzSharedThread = resultSharedResources.getSharedThread(analyzFile);
                     if (analyzSharedThread == null) {
                         error.add("ОШИБКА!!! В классе " + analyzFile + " найден вызов метода wait без вызова notify или notifyAll");
                         for (Expression exception : objectOnWait) {
@@ -53,8 +56,8 @@ public class ModuleWaitAndNotify {
                         for (Expression exception : objectOnWait) {
                             result.put(exception, false);
                         }
-                        for (ResultSharedResources.RunSharedThread runSharedThread : analyzSharedThread.getRunSharedThreads()) {
-                            for (ResultSharedResources.SharedResources sharedResources : runSharedThread.getSharedResources()) {
+                        for (RunSharedThread runSharedThread : analyzSharedThread.getRunSharedThreads()) {
+                            for (SharedResources sharedResources : runSharedThread.getSharedResources()) {
                                 for (Expression exception : objectOnWait) {
                                     if (sharedResources.getName().equals(exception.toString())) {
                                         String typeThread = sharedResources.getTypeThread();

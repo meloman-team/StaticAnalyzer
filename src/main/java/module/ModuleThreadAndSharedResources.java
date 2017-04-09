@@ -4,8 +4,7 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.expr.Expression;
-import model.ResultSharedResources;
-import model.ThreadObject;
+import model.*;
 import utils.ParserMetods;
 
 import java.io.IOException;
@@ -39,12 +38,12 @@ public class ModuleThreadAndSharedResources {
             if (classArgs == null) continue;//TODO проверять не только конструкторы но и сеттеры
             for (int i = 0; i < classArgs.size(); i++) {
                 ThreadObject thread1 = classArgs.get(i);
-                ResultSharedResources.SharedThread sharedThread = result.getSharedThread(thread1.getVariableType());
+                SharedThread sharedThread = result.getSharedThread(thread1.getVariableType());
                 if (sharedThread == null) {
-                    sharedThread = new ResultSharedResources.SharedThread(thread1.getVariableType());
+                    sharedThread = new SharedThread(thread1.getVariableType());
                     result.getSharedThread().add(sharedThread);
                 }
-                ResultSharedResources.RunSharedThread runSharedThread = new ResultSharedResources.RunSharedThread();
+                RunSharedThread runSharedThread = new RunSharedThread();
                 runSharedThread.setNumberThread(sharedThread.getRunSharedThreads().size() + 1);
                 sharedThread.getRunSharedThreads().add(runSharedThread);
                 for (int j = 0; j < classArgs.size(); j++) {
@@ -58,7 +57,7 @@ public class ModuleThreadAndSharedResources {
                             String s2 = thread2Parameters.get(j2);
                             if (s1.equals(s2)) {
                                 runSharedThread.getSharedResources().add(
-                                        new ResultSharedResources.SharedResources(s1, i2, thread2.getVariableType())
+                                        new SharedResources(s1, i2, thread2.getVariableType())
                                 );
                             }
                         }

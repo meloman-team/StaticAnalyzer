@@ -2,9 +2,6 @@ import module.ModuleControl;
 
 public  class Test {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws Exception {
         String[] strings = new String[1];
 

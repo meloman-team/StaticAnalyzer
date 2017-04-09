@@ -1,6 +1,9 @@
 package module;
 
 import model.ResultSharedResources;
+import model.RunSharedThread;
+import model.SharedResources;
+import model.SharedThread;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ public class ModuleControl {
 
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            System.out.println("Пожалуйста укажите директорию с проектом");
+            System.out.println("Пожалуйста, укажите директорию с проектом");
             return;
         }
         String dir = args[0];
@@ -46,15 +49,15 @@ public class ModuleControl {
     private static void printResult(ResultSharedResources resultSharedResources){
         if (resultSharedResources.getSharedThread().size() == 0)
             System.out.println("Разделяемых ресурсов не найдено");
-        for (ResultSharedResources.SharedThread sharedThread : resultSharedResources.getSharedThread()) {
+        for (SharedThread sharedThread : resultSharedResources.getSharedThread()) {
             System.out.println(sharedThread.getTypeThread() + " Количество запущеных потоков: " + sharedThread.getRunSharedThreads().size());
             System.out.println();
         }
         System.out.println("--------------------------");
-        for (ResultSharedResources.SharedThread sharedThread : resultSharedResources.getSharedThread()) {
-            for (ResultSharedResources.RunSharedThread runSharedThreads : sharedThread.getRunSharedThreads()) {
+        for (SharedThread sharedThread : resultSharedResources.getSharedThread()) {
+            for (RunSharedThread runSharedThreads : sharedThread.getRunSharedThreads()) {
                 System.out.println("Поток " + sharedThread.getTypeThread() + " №" + runSharedThreads.getNumberThread());
-                for (ResultSharedResources.SharedResources sharedResources : runSharedThreads.getSharedResources()) {
+                for (SharedResources sharedResources : runSharedThreads.getSharedResources()) {
                     System.out.println();
                     System.out.println(
                             "Потоки " +
