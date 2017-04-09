@@ -88,47 +88,4 @@ public  class Test {
 
     }
 
-    private static void printResult(ResultSharedResources resultSharedResources){
-        if (resultSharedResources.getSharedThread().size() == 0)
-            System.out.println("Разделяемых ресурсов не найдено");
-        for (ResultSharedResources.SharedThread sharedThread : resultSharedResources.getSharedThread()) {
-            System.out.println(sharedThread.getTypeThread() + " Количество запущеных потоков: " + sharedThread.getRunSharedThreads().size());
-            System.out.println();
-        }
-        System.out.println("--------------------------");
-        for (ResultSharedResources.SharedThread sharedThread : resultSharedResources.getSharedThread()) {
-            for (ResultSharedResources.RunSharedThread runSharedThreads : sharedThread.getRunSharedThreads()) {
-                System.out.println("Поток " + sharedThread.getTypeThread() + " №" + runSharedThreads.getNumberThread());
-                for (ResultSharedResources.SharedResources sharedResources : runSharedThreads.getSharedResources()) {
-                    System.out.println();
-                    System.out.println(
-                            "Потоки " +
-                                    sharedThread.getTypeThread() +
-                                    " и " +
-                                    sharedResources.getTypeThread() +
-                                    " разделяют переменную " +
-                                    sharedResources.getName()
-                    );
-                    System.out.println("У класса " +
-                            sharedThread.getTypeThread() +
-                            " Индекс разделяемого параметра " +
-                            sharedResources.getIndex()
-                    );
-                    System.out.println();
-                }
-            }
-            System.out.println("--------------------------");
-        }
-    }
-
-    private static void printResult(ArrayList<String> errors){
-        if (errors.size() == 0) {
-            System.out.println("Ошибок не обнаружено");
-        } else {
-            for (String error : errors) {
-                System.out.println(error);
-            }
-        }
-    }
-
 }
