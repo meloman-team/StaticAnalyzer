@@ -11,6 +11,5 @@ public class ProducerConsumer {
         Consumer consumer = new Consumer(o);
         new Thread(consumer).start();
         new Thread(producer).start();
-
     }
 }

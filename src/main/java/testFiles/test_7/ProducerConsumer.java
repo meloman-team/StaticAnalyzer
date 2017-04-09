@@ -14,6 +14,5 @@ public class ProducerConsumer {
         new Thread(consumer).start();
         new Thread(producer).start();
         new Thread(notifyClass).start();
-
     }
 }

@@ -1,211 +1,90 @@
 import model.ResultSharedResources;
-import module.ModuleThreadAndSharedResources;
-import module.ModuleWaitAndNotify;
+import module.ModuleControl;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public  class Test {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        String[] strings = new String[1];
+
         // Тест №1 успешный
+
+        strings[0] = "src\\main\\java\\testFiles\\test_1";
         System.out.println("Тест №1");
         System.out.println();
 
-        ArrayList<String> files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_1\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_1\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_1\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_1\\ProducerConsumer.java");
-
-        ModuleWaitAndNotify moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        ModuleThreadAndSharedResources mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ModuleControl.main(strings);
 
         // Тест №2 успешный
+
+        strings[0] = "src\\main\\java\\testFiles\\test_2";
         System.out.println();
         System.out.println("Тест №2");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_2\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_2\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_2\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_2\\ProducerConsumer.java");
-
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ModuleControl.main(strings);
 
         // Тест №3 успешный
+
+        strings[0] = "src\\main\\java\\testFiles\\test_3";
         System.out.println();
         System.out.println("Тест №3");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_3\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_3\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_3\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_3\\ProducerConsumer.java");
-
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ModuleControl.main(strings);
 
         // Тест №4 успешный
+
+        strings[0] = "src\\main\\java\\testFiles\\test_4";
         System.out.println();
         System.out.println("Тест №4");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_4\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_4\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_4\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_4\\ProducerConsumer.java");
+        ModuleControl.main(strings);
 
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
+        // Тест №5 успешный
 
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // Тест №5 не успешный
-        //ложное срабатывание из за не полного прослеживания присвоения объектов синхронизации
+        strings[0] = "src\\main\\java\\testFiles\\test_5";
         System.out.println();
         System.out.println("Тест №5");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_5\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_5\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_5\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_5\\ProducerConsumer.java");
-
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ModuleControl.main(strings);
 
         // Тест №6 не успешный
         // ложное срабатывание на класс Producer поскольку его поток не запускался в программе TODO добавить проверку на запуск класса в потоке
         // не сработало предупреждение что класс Consumer не может пробудить поток (проблема с анализом логики программы)
+
+        strings[0] = "src\\main\\java\\testFiles\\test_6";
         System.out.println();
         System.out.println("Тест №6");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_6\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_6\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_6\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_6\\ProducerConsumer.java");
+        ModuleControl.main(strings);
 
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
         // Тест №7 успешный
+
+        strings[0] = "src\\main\\java\\testFiles\\test_7";
         System.out.println();
         System.out.println("Тест №7");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_7\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_7\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_7\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_7\\ProducerConsumer.java");
-        files.add("src\\main\\java\\testFiles\\test_7\\NotifyClass.java");
+        ModuleControl.main(strings);
 
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
+        // Тест №8 почти успешный
+        // неверно считает количество потоков при создании их в цикле
 
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
 
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // Тест №8 успешный
+        strings[0] = "src\\main\\java\\testFiles\\test_8";
         System.out.println();
         System.out.println("Тест №8");
         System.out.println();
 
-        files = new ArrayList();
-        files.add("src\\main\\java\\testFiles\\test_8\\Consumer.java");
-        files.add("src\\main\\java\\testFiles\\test_8\\Producer.java");
-        files.add("src\\main\\java\\testFiles\\test_8\\syn.java");
-        files.add("src\\main\\java\\testFiles\\test_8\\ProducerConsumer.java");
-
-        moduleWaitAndNotify = new ModuleWaitAndNotify(files);
-        mtar = new ModuleThreadAndSharedResources(files);
-        try {
-            ResultSharedResources resultSharedResources = mtar.main();
-            printResult(resultSharedResources);
-
-            ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
-            printResult(errors);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ModuleControl.main(strings);
 
     }
 

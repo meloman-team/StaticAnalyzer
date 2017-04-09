@@ -12,17 +12,18 @@ import utils.ParserMetods;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ModuleWaitAndNotify {
 
     //список проверяемых файлов
-    private ArrayList<String> files = new ArrayList();
+    private List<String> files;
 
     //список ошибок
     private ArrayList<String> error = new ArrayList();
 
-    public ModuleWaitAndNotify(ArrayList<String> files) {
+    public ModuleWaitAndNotify(List<String> files) {
         this.files = files;
     }
 

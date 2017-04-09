@@ -18,9 +18,9 @@ import java.util.List;
 public class ModuleThreadAndSharedResources {
 
     //список проверяемых файлов
-    private ArrayList<String> files = new ArrayList();
+    private List<String> files;
 
-    public ModuleThreadAndSharedResources(ArrayList<String> files) {
+    public ModuleThreadAndSharedResources(List<String> files) {
         this.files = files;
     }
 
