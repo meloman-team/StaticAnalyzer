@@ -35,18 +35,18 @@ public class ModuleControl {
         List<String> javaFiles = new ArrayList<>();
         File file = new File(dir);
         File[] files = file.listFiles();
-        if(files != null)
-        for (File f : files) {
-            if (f.isDirectory()) javaFiles.addAll(findJavaFile(f.getPath()));
-            else {
-                String[] sp = f.getName().split("\\.");
-                if (sp[sp.length - 1].equals("java")) javaFiles.add(f.getPath());
+        if (files != null)
+            for (File f : files) {
+                if (f.isDirectory()) javaFiles.addAll(findJavaFile(f.getPath()));
+                else {
+                    String[] sp = f.getName().split("\\.");
+                    if (sp[sp.length - 1].equals("java")) javaFiles.add(f.getPath());
+                }
             }
-        }
         return javaFiles;
     }
 
-    private static void printResult(ResultSharedResources resultSharedResources){
+    private static void printResult(ResultSharedResources resultSharedResources) {
         if (resultSharedResources.getSharedThread().size() == 0)
             System.out.println("Разделяемых ресурсов не найдено");
         for (SharedThread sharedThread : resultSharedResources.getSharedThread()) {
@@ -79,7 +79,7 @@ public class ModuleControl {
         }
     }
 
-    private static void printResult(ArrayList<String> errors){
+    private static void printResult(ArrayList<String> errors) {
         if (errors.size() == 0) {
             System.out.println("Ошибок не обнаружено");
         } else {

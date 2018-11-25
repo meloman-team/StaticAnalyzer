@@ -29,7 +29,7 @@ public class ThreadObject {
         this.constructorParameters = constructorParameters;
     }
 
-    public void addConstructorParameters(String parameter){
+    public void addConstructorParameters(String parameter) {
         this.constructorParameters.add(parameter);
     }
 }

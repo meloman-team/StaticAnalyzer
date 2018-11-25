@@ -3,16 +3,17 @@ package parser;
 import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
 import java.util.ArrayList;
 
 /**
- *  в конструкторе ищет присвоение в конструкторе
+ * В конструкторе ищет присвоение в конструкторе
  */
 public class FoundAssign extends VoidVisitorAdapter {
-    
-    private  ArrayList<Expression> objectAssign;
-    
-    public FoundAssign(){
+
+    private ArrayList<Expression> objectAssign;
+
+    public FoundAssign() {
         objectAssign = new ArrayList<>();
     }
 
@@ -33,5 +34,5 @@ public class FoundAssign extends VoidVisitorAdapter {
     public ArrayList<Expression> getObjectAssign() {
         return objectAssign;
     }
-    
+
 }

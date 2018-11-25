@@ -15,5 +15,5 @@ public class FoundPackage extends VoidVisitorAdapter {
     public String getPackageName() {
         return packageName;
     }
-    
+
 }

@@ -1,6 +1,6 @@
 import module.ModuleControl;
 
-public  class Test {
+public class Test {
 
     public static void main(String[] args) throws Exception {
         String[] strings = new String[1];

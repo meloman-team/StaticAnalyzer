@@ -2,6 +2,7 @@ package parser;
 
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,14 @@ public class FoundMethodsCallByParameterValue {
     private final ArrayList<String> foundObject;//найденые объекты у которых вызван метод
     private final ArrayList<String> foundMethod;//найденые вызываемые методы которым в параметры передали искомый объект
     private final ArrayList<Integer> idx;//индекс передаваемого объекта в параметры метода
-    
-    public FoundMethodsCallByParameterValue(){
+
+    public FoundMethodsCallByParameterValue() {
         this.foundObject = new ArrayList<>();
         this.foundMethod = new ArrayList<>();
         this.idx = new ArrayList<>();
     }
-    
-    public<T> void findMethodsByParameterValue(T cu, String nameParameter) {
+
+    public <T> void findMethodsByParameterValue(T cu, String nameParameter) {
         //ищем вызовы всех методов
         FoundMethodCall foundMethodCall = new FoundMethodCall();
         foundMethodCall.visit((MethodCallExpr) cu, null);
@@ -31,13 +32,13 @@ public class FoundMethodsCallByParameterValue {
         ArrayList<String> nameMethodCall = foundMethodCall.getNameMethodCall();
         //получаем список объектов у которых были вызваны методы
         ArrayList<String> nameScopeObject = foundMethodCall.getNameScopeObject();
-        
+
         //поиск в параметрах метода переданные объекты
         for (int i = 0; i < nameScopeObject.size(); i++) {
             List<Expression> get = foundMethodCallArgs.get(i);
             for (int j = 0; j < get.size(); j++) {
                 Expression expr = get.get(j);
-                if(nameParameter.equals(expr.toString())){
+                if (nameParameter.equals(expr.toString())) {
                     foundObject.add(nameScopeObject.get(i));
                     foundMethod.add(nameMethodCall.get(i));
                     idx.add(j);
@@ -67,5 +68,5 @@ public class FoundMethodsCallByParameterValue {
     void findMethodsByParameterValue(MethodCallExpr cu, String nameObj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

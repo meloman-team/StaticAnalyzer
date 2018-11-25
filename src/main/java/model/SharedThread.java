@@ -16,7 +16,7 @@ public class SharedThread {
      */
     private List<RunSharedThread> runSharedThreads = new ArrayList<>();
 
-    public SharedThread (String typeThread){
+    public SharedThread(String typeThread) {
         this.typeThread = typeThread;
     }
 
