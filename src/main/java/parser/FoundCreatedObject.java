@@ -9,7 +9,10 @@ import java.util.List;
 
 public class FoundCreatedObject extends VoidVisitorAdapter {
 
-    private ArrayList<String> foundCreatedObjet;//переменные в которых храняться созданный объект
+    /**
+     * Список переменных в которых хранятся созданный объект
+     */
+    private ArrayList<String> foundCreatedObjet;
 
     public FoundCreatedObject() {
         foundCreatedObjet = new ArrayList<>();

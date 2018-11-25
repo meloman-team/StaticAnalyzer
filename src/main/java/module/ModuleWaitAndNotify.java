@@ -1,5 +1,6 @@
 package module;
 
+import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclaratorId;
@@ -13,27 +14,38 @@ import parser.FoundWaitAndNotify;
 import parser.SearchConstructor;
 import utils.ParserMetods;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Модуль поиска ошибок типа "спящие потоки"
+ */
 public class ModuleWaitAndNotify {
 
-    //список проверяемых файлов
+    /**
+     * Список проверяемых файлов
+     */
     private List<String> files;
 
-    //список ошибок
-    private ArrayList<String> error = new ArrayList();
+    /**
+     * Текст о найденных ошибках
+     */
+    private ArrayList<String> error = new ArrayList<>();
 
     public ModuleWaitAndNotify(List<String> files) {
         this.files = files;
     }
 
     /**
-     * @throws Exception
+     * Анализирует список проверяемых файлов на наличие ошибок типа "спящие потоки"
+     *
+     * @param resultSharedResources информация о разделяемых ресурсах
+     * @return текст о найденных ошибках
      */
-    public ArrayList<String> main(ResultSharedResources resultSharedResources) throws Exception {
+    public ArrayList<String> analysis(ResultSharedResources resultSharedResources) throws IOException, ParseException {
         for (String file : files) {
             CompilationUnit cu = ParserMetods.parse(file);
             //ищем все методы
@@ -45,6 +57,7 @@ public class ModuleWaitAndNotify {
                 if (!objectOnWait.isEmpty()) {
                     String analyzFile = ParserMetods.splitPathToNameClass(file);
                     //TODO необходимо проверять полный путь до класса (не различает одинаковое название класса в разных пакетах)
+                    //TODO не проверяется запускается ли данный файл в потоке
                     SharedThread analyzSharedThread = resultSharedResources.getSharedThread(analyzFile);
                     if (analyzSharedThread == null) {
                         error.add("ОШИБКА!!! В классе " + analyzFile + " найден вызов метода wait без вызова notify или notifyAll");

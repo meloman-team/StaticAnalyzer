@@ -26,7 +26,7 @@ public class ModuleControl {
         ResultSharedResources resultSharedResources = mtar.main();
         printResult(resultSharedResources);
 
-        ArrayList<String> errors = moduleWaitAndNotify.main(resultSharedResources);
+        ArrayList<String> errors = moduleWaitAndNotify.analysis(resultSharedResources);
         printResult(errors);
 
     }
